@@ -7,18 +7,17 @@ form.addEventListener("submit", validateForm);
 function validateForm(e){
     
 
-    return validateEmail(form.email)
-        //validateUsername(form.username) 
+    return validateUsername(form.username) 
+        //validateEmail(form.email)
        && form.terms.checked;
     
 }
 
 function validateUsername(user) {
-    const userRegex = /a/;
-    if ((user.value).trim().length <= 4){
-        return false;
+    const userRegex = /^(?=(?:([A-Za-z0-9])(?!\1))*[A-Za-z0-9]{4,}$)(?!([A-Za-z0-9])\2*$)[A-Za-z0-9]+$/;
+    if (!userRegex.test(user.value)){ window.alert((user.value));
+        //return false;
     }
-    if ((user.value).trim().length <= 4){}
     return true;
 }
 function validateEmail(email) {
@@ -26,12 +25,12 @@ function validateEmail(email) {
     //const emailRegex = new RegExp('^[a-zA-Z0-9._%+-]+@(?!example\.com$)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     
     if (emailVal.includes("example.com")){
-        //return false window.alert(typeof emailVal);
+        //return false; 
     }
     return true;
 }
 function validatePassword(user) {
-    if ((user.value).trim().length <= 4){
+    if ((user.value).trim().length < 4){
         window.alert((user.value).trim().length);
     }
 }
