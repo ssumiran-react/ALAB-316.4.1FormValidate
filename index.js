@@ -1,10 +1,12 @@
 let successMsg = document.getElementById("successMsg");
-//successMsg.style.display = 'none';
+let loginMsg = document.getElementById("loginMsg");
 
 const form = document.getElementById("registration");
-let userName = form.username;
+const formLogin = document.getElementById("login");
+
 let usernameLowercase = "";
 
+//let userName = form.username;
 // userName.addEventListener('focusout', ()=>{
 //     isUsernameExist("register");
 // });
@@ -14,7 +16,7 @@ form.addEventListener("submit", validateForm);
 function validateForm() {
     try {
         successMsg.style.display = "block";
-        
+
         if (isValidUsername(form.username)
             && isValidEmail(form.email)
             && isValidPassword(form.password, form.passwordCheck)
@@ -28,7 +30,7 @@ function validateForm() {
             userRegister["password"] = form.password.value;
 
             localStorage.setItem(usernameLowercase, JSON.stringify(userRegister));
-            
+
             successMsg.style.color = "blue";
             successMsg.textContent = "User created successfully."
             return true;
@@ -40,7 +42,7 @@ function validateForm() {
 
             return false;
         }
-        
+
         //Hide it after 3 seconds (3000 ms)
         setTimeout(() => {
             successMsg.style.display = "none";
@@ -91,22 +93,72 @@ function isValidPassword(password, passwordCheck) {
     }
 }
 
-function isUsernameExist(loginType) {
-    usernameLowercase = form.username.value.toLowerCase();
-    let exists = true;
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i); // Get the key at index i
+// Login Form Event
+formLogin.addEventListener("submit", () => {
+    successMsg.style.display = "block";
+    if(isUsernameExist("login")){
+        loginMsg.style.color = "green";
 
-        if (loginType == "register") {
-            if (key === usernameLowercase) { //window.alert(form.username.value + "  retypePa" + localStorage.key(0));
-                console.log(`Match found: "${usernameLowercase}" exists as a key in localStorage.`);
-                exists = false;
-                break;
-            }
-        } else {
-
+        if (formLogin.persist.checked){
+            loginMsg.textContent = "Welcome back! Normally, this would be handled by a variety of persistent login tools and technologies";
+        }else{
+            loginMsg.textContent = "Welcome back!"
         }
+    }else{
+        loginMsg.style.color = "red";
+        loginMsg.textContent = "Incorrect login information."
     }
-    return exists;
+    //Hide it after 3 seconds (3000 ms)
+    setTimeout(() => {
+        loginMsg.style.display = "none";
+    }, 3000);
+});
 
+function isUsernameExist(loginType) {
+    let loginUser = "";
+    let loginPass = "";
+    if (loginType == "register") {
+        usernameLowercase = form.username.value.toLowerCase();
+    } else {
+        loginUser = formLogin.username.value.toLowerCase();
+        loginPass = formLogin.password.value;
+    }
+    try {
+        let exists = true;
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i); // Get the key at index i
+
+            if (loginType == "register") {
+                if (key === usernameLowercase) { //window.alert(form.username.value + "  retypePa" + localStorage.key(0));
+                    console.log(`Match found: "${usernameLowercase}" exists as a key in localStorage.`);
+                    exists = false;
+                    break;
+                }
+            } else {
+
+                if (key === loginUser) { //window.alert(form.username.value + "  retypePa" + localStorage.key(0));
+                    console.log(`Login user found: "${loginUser}" exists as a key in localStorage.`);
+                    const userData = localStorage.getItem(loginUser);
+                    const parsedObject = JSON.parse(userData);
+                    // Loop through keys and values
+                    for (const [key, value] of Object.entries(parsedObject)) {   //window.alert(`Key: ${key}, Value: ${value}`);
+                        
+                        if (key === "password" && loginPass !== value){
+                            exists = false;
+                            break;
+                        }else{
+                            exists = true;
+                        }
+                    }
+
+                } else {
+                    exists = false;
+                }
+            }
+        }
+        return exists;
+    } catch (error) {
+        console.error("Error from localStorage:", error);
+    }
 }
+
