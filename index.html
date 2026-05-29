@@ -19,28 +19,30 @@
     <div>
       <h1>Register</h1>
       <p>Please provide your information below.</p>
-
+      
       <!-- Registration Form -->
       <form id="registration">
-        <input name="username" type="text" placeholder="Username"  required/>
+        <input name="username" type="text" placeholder="Username" value="Abigal4" required/>
         <span class="input-icon"><i class="fa-solid fa-user"></i></span><br />
 
-        <input name="email" type="email" placeholder="Email"  required/>
+        <input name="email" type="email" placeholder="Email" value="babyei@gmail.com" required/>
         <span class="input-icon"><i class="fa-solid fa-envelope"></i></span>
         <br />
 
-        <input name="password" type="password" placeholder="Password" required/>
+        <input name="password" type="password" placeholder="Password" value="Another$ValidPass123" required/>
         <span class="input-icon"><i class="fa-solid fa-key"></i></span><br />
 
-        <input name="passwordCheck" type="password" placeholder="Repeat Password" required/>
+        <input name="passwordCheck" type="password" placeholder="Repeat Password" value="Another$ValidPass123" required/>
         <span class="input-icon"><i class="fa-solid fa-key"></i></span><br /><br />
 
         <div class="flex-row">
           <input name="terms" type="checkbox" required />
-          <label for="terms">I agree to the&nbsp;<a href="#">Terms of Use</a>.</label>
+          <label for="terms">I agree to the <a href="#">Terms of Use</a>.</label>
           <input type="submit" value="Register" />
         </div>
       </form>
+      <div ><p  id="successMsg" ></p></div>
+      
     </div>
 
     <!-- Login Side -->
@@ -53,7 +55,7 @@
         <input name="username" type="text" placeholder="Username" />
         <span class="input-icon"><i class="fa-solid fa-user"></i></span><br />
 
-        <input name="password" type="text" placeholder="Password" />
+        <input name="password" type="text" placeholder="Password" value="Another$ValidPass123"/>
         <span class="input-icon"><i class="fa-solid fa-key"></i></span><br /><br />
 
         <div class="flex-row">
@@ -68,9 +70,10 @@
     </div>
   </div>
 
+  
   <!-- Error Display Container -->
   <div id="errorDisplay" style="color: red;">
-    <p>Invalid</p>
+    <p></p>
   </div>
 </body>
 
